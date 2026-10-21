@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AutoCleanse: explainable dataset preprocessing</title>
+<meta name="description" content="AutoCleanse cleans messy tabular datasets, explains every decision, and scores how ready the data is for machine learning.">
+<meta name="color-scheme" content="light dark"><meta name="theme-color" content="#1f3954">
+<meta property="og:type" content="website"><meta property="og:title" content="AutoCleanse: explainable dataset preprocessing"><meta property="og:description" content="Clean messy tabular data, explain every decision, and score ML readiness."><meta name="twitter:card" content="summary">
+<noscript><style>.b,.feat{opacity:1!important;transform:none!important}</style></noscript>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;600&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav"><div class="wrap">
+<a class="logo" href="#hero"><i></i>AutoCleanse</a>
+<nav id="menu" aria-label="Sections"><a href="#how">How it works</a><a href="#try">Try it</a><a href="#methods">Methods</a><a href="#stack">Stack</a><a href="#faq">FAQ</a></nav>
+<div class="tools"><button class="ib" id="theme" type="button" aria-label="Switch colour theme">◐</button><button class="ib burger" id="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="menu">☰</button><a class="btn" href="#try">Try the demo</a></div>
+</div></header>
+
+<main id="main">
+<section class="hero" id="hero"><div class="wrap">
+<div>
+<h1>Messy data in. ML-ready data out, with the reasons.</h1>
+<p class="lead">AutoCleanse profiles a dataset, fixes what’s wrong with it, and explains every change in plain language, so you can trust the data before you train on it.</p>
+<div class="acts"><a class="btn" href="#how">See how it works</a><a class="btn ghost" href="#try">Open the demo</a></div>
+<p class="proof">Built for tabular data: CSV files for classification and regression.</p>
+</div>
+<div class="tbl" aria-label="Example of cleaning a small table">
+<h3>customers.csv <span>Example data</span></h3>
+<table>
+<thead><tr><th>Name</th><th>Age</th><th>City</th></tr></thead>
+<tbody>
+<tr><td>Asha</td><td>24</td><td>Pune</td></tr>
+<tr><td>Ravi</td><td class="d" data-b="27.5">—</td><td class="d" data-b="Pune">pune</td></tr>
+<tr><td>Meera</td><td>31</td><td>Pune</td></tr>
+<tr id="dup"><td>Ravi</td><td>—</td><td>pune</td></tr>
+</tbody></table>
+<div class="foot"><p id="cap" aria-live="polite">Raw upload: one missing age, inconsistent city spelling, one duplicate row.</p><button class="btn" id="clean" aria-pressed="false">Clean it</button></div>
+</div>
+</div></section>
+
+<section class="sheet" id="how"><div class="wrap">
+<h2>Every step is visible, from upload to score.</h2>
+<p class="lead">Scroll through one example run. Each stage adds to the report on the right.</p>
+<div class="how">
+<div>
+<article class="feat" data-n="1"><h3>Profile the dataset</h3><p>Row and column counts, types, missing values, duplicates, skew, correlations and class balance, measured before anything changes.</p></article>
+<article class="feat" data-n="2"><h3>Find what’s wrong</h3><p>Sparse columns, outliers, mixed spellings, constant columns and suspected data leakage are flagged with the evidence behind each flag.</p></article>
+<article class="feat" data-n="3"><h3>Fix it automatically</h3><p>Imputation, outlier handling, encoding, scaling and class balancing are chosen per column. You can override any of them.</p></article>
+<article class="feat" data-n="4"><h3>Explain each decision</h3><p>Every change comes with a reason in plain language. SHAP and feature importance then show how cleaning changed what a model relies on.</p></article>
+<article class="feat" data-n="5"><h3>Score ML readiness</h3><p>A single score for completeness, consistency, balance and feature quality, shown before and after, and checked with a baseline model on raw versus cleaned data.</p></article>
+</div>
+<div class="devcol"><div class="dev" id="dev" aria-label="Example AutoCleanse report">
+<div class="top">AutoCleanse <span>Example run</span></div>
+<div class="b" data-n="1"><b>sample.csv</b>1,000 rows · 12 columns</div>
+<div class="b" data-n="2"><b>Issues found</b><ul><li>age: 12% missing</li><li>income: 9 outliers</li><li>city: 4 spellings of one place</li><li>2 duplicate rows</li></ul></div>
+<div class="b" data-n="3"><b>Fixes applied</b><ul><li>✓ age filled with median</li><li>✓ income capped</li><li>✓ city values merged</li><li>✓ duplicates removed</li></ul></div>
+<div class="b why" data-n="4"><b>Why median for age?</b>The values are skewed, so the mean would be pulled upward by a few large ages.</div>
+<div class="b" data-n="5"><b>ML readiness</b>Before <div class="bar"><i class="o" style="width:54%"></i></div>After <div class="bar"><i style="width:88%"></i></div><small>Illustrative scores</small></div>
+</div></div>
+</div>
+</div></section>
+
+<section class="sheet navy" id="try"><div class="wrap">
+<h2>Try it on your own file.</h2>
+<p class="lead">Drop a CSV and this quick version profiles and cleans it in your browser. The file never leaves your device.</p>
+<div class="demo">
+<label class="drop" id="drop" for="file"><input id="file" type="file" accept=".csv,.tsv,.txt,text/csv"><b>Drop a CSV here or choose a file</b><span>Up to 5 MB, with a header row</span></label>
+<button class="btn ghost" id="sample" type="button">Use sample data</button>
+<p id="msg" role="status" aria-live="polite"></p>
+<div id="out" hidden></div>
+</div>
+</div></section>
+
+<section class="sheet alt" id="methods"><div class="wrap">
+<div class="mt">
+<div><h2>Automatic by default. Yours to change.</h2><p class="lead">Auto picks a method for each column and logs why. Prefer a specific method? Set it and AutoCleanse follows your choice. Changes re-run the demo above; greyed-out options run in the full version.</p><p id="mnote" role="status" aria-live="polite" style="font-size:.95rem;margin-top:1rem"></p></div>
+<div id="rows"></div>
+</div>
+</div></section>
+
+<section class="sheet navy" id="stack"><div class="wrap">
+<h2>Three layers, each with one job.</h2>
+<p class="lead">Java runs the application. Python does the data science. They talk over a REST API.</p>
+<div class="cols">
+<div class="col"><h3>Interface</h3><p>Upload a file, review the plan, compare before and after, and download the report.</p><small>React</small></div>
+<div class="col"><h3>Application layer</h3><p>Handles uploads, users, job tracking and stored reports, and passes each job to the ML service.</p><small>Java · Spring Boot · PostgreSQL</small></div>
+<div class="col"><h3>ML service</h3><p>Profiles, cleans and scores the data, then generates the explanations.</p><small>Python · FastAPI · pandas · scikit-learn · SHAP</small></div>
+</div>
+</div></section>
+
+<section class="sheet" id="steps"><div class="wrap">
+<h2>Three steps, then train.</h2>
+<div class="stack">
+<div class="sc" style="--t:6rem"><div class="n">1</div><div><h3>Upload your CSV</h3><p>AutoCleanse reads the file, detects column types and profiles every column.</p></div></div>
+<div class="sc" style="--t:7.2rem"><div class="n">2</div><div><h3>Review the plan</h3><p>See each issue, the fix chosen and the reason. Accept the defaults or change a method.</p></div></div>
+<div class="sc" style="--t:8.4rem"><div class="n">3</div><div><h3>Download the results</h3><p>Get the cleaned dataset and a report with the decision log, the readiness score and the model comparison.</p></div></div>
+</div>
+</div></section>
+
+<section class="sheet alt" id="faq"><div class="wrap">
+<h2>Questions, answered plainly.</h2>
+<div class="faq">
+<details><summary>What kind of data does it handle?</summary><p>Tabular data in CSV files, prepared for classification and regression problems. Text, images and time series are outside the current scope.</p></details>
+<details><summary>Does it change my original file?</summary><p>No. AutoCleanse writes a cleaned copy and a decision log. Your upload stays exactly as it was.</p></details>
+<details><summary>How is this different from AutoML?</summary><p>AutoML picks and tunes a model. AutoCleanse stops earlier: it prepares the data and shows its reasoning, so you can check the data before you train.</p></details>
+<details><summary>How is the readiness score worked out?</summary><p>It combines completeness, consistency, class balance, outlier load and feature quality, measured before and after cleaning. A baseline model trained on both versions checks that the score reflects real improvement.</p></details>
+<details><summary>Can I override a decision?</summary><p>Yes. Every method in the settings can be set by hand. Auto is only the default.</p></details>
+</div>
+</div></section>
+
+<section class="sheet esp start" id="start"><div class="wrap">
+<h2>Give your next dataset a clean start.</h2>
+<p class="lead">Upload a CSV, review what changed and why, and train on data you can trust.</p>
+<div class="acts"><a class="btn" href="#try">Open the demo</a><a class="btn ghost" href="#" data-placeholder="github-url">View on GitHub</a></div>
+</div></section>
+</main>
+
+<footer class="foot2"><div class="wrap">
+<div class="grid">
+<div><a class="logo" href="#hero"><i></i>AutoCleanse</a><p style="margin-top:.7rem">Explainable AI-based dataset preprocessing and ML readiness optimization.</p></div>
+<ul><li><a href="#how">How it works</a></li><li><a href="#methods">Methods</a></li><li><a href="#stack">Stack</a></li><li><a href="#faq">FAQ</a></li></ul>
+<ul data-placeholder="team"><li>Final-year BE project</li><li>Your name</li><li>Guide name · College name</li></ul>
+</div>
+<div class="word" aria-hidden="true">AutoCleanse</div>
+<div class="legal"><span>© 2026 AutoCleanse</span></div>
+</div></footer>
+
+<script src="script.js" defer></script>
+</body>
+</html>
